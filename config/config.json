@@ -1,0 +1,35 @@
+{
+  "check_weights": {
+    "description": 1.5,
+    "gotchas": 2.0,
+    "file_organization": 1.0,
+    "over_constraint": 1.0,
+    "known_knowledge": 1.0,
+    "memory_config": 1.0,
+    "scripts": 1.0,
+    "hooks": 1.0,
+    "markdown_format": 1.0,
+    "comprehensive": 1.0,
+    "progressive_disclosure": 1.5,
+    "logs": 1.0,
+    "iteration": 1.0,
+    "config_location": 1.0
+  },
+  "score_thresholds": {
+    "grade_A": 90,
+    "grade_B": 75,
+    "grade_C": 60,
+    "grade_D": 0
+  },
+  "max_description_length": 100,
+  "max_skillmd_lines": 200,
+  "lightweight_skill_max_lines": 80,
+  "should_split_min_lines": 150,
+  "min_gotchas_bytes": 500,
+  "min_gotchas_items": 3,
+  "skip_checks": [],
+  "output_format": "json+markdown",
+  "language": "zh-CN",
+  "report_style": "friendly",
+  "auto_fix_suggestions": true
+}
