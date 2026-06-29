@@ -1,3 +1,49 @@
+## [2026-06-24] ingest | 摄入 评测集生产 Pipeline 设计
+
+- **变更**: 新增 1 个来源摘要、1 个概念；大幅扩展 [[EvalDatasetEngineering]]（Pipeline架构/6种GT类型/Agent Process GT/Goodcase回流/QC Gate/12周 Roadmap）；更新 [[index.md]]
+- **新增来源**: [[摘要-评测集生产pipeline设计]]
+- **新增概念**: [[AdversarialGT]]
+- **冲突**: 无
+
+## [2026-06-24] ingest | 摄入 RAG 效果评估
+
+- **变更**: 新增 1 个来源摘要、3 个实体、1 个概念；增量更新 [[HuggingFace]]（添加 Ragas 关联及 source）；更新 [[index.md]]
+- **新增来源**: [[摘要-rag-效果评估]]
+- **新增实体**: [[Ragas]]、[[LangChain]]、[[LlamaIndex]]
+- **新增概念**: [[RAGEvaluation]]
+- **冲突**: 无
+
+## [2026-06-23] ingest | 摄入"AI评测AI"智能客服运营Agent体系
+
+- **变更**: 新增 1 个来源摘要、2 个实体、3 个概念；增量更新 [[GraderTypes]]（LLM非确定性根源详解+多模型对抗方案）、[[EvalHarness]]（Checkpoint中断恢复+并发限流管理）；更新 [[index.md]]
+- **新增来源**: [[摘要-ai评测ai-智能客服运营agent]]
+- **新增实体**: [[孙敦灿]]、[[阿里云百炼]]
+- **新增概念**: [[AutoEvalAgent]]（AI评测AI模式+评估诊断优化三位一体+正向负向混合评分）、[[ContextEngineering]]（上下文工程：4种失效模式+5种应对策略）、[[DeepThinkingMode]]（深度思考模式：五步推理流程+vs普通CoT）
+- **核心洞察**: 阿里云团队实践验证了"用更大的LLM+更全面的上下文+深度思考模式来评测较小的LLM客服Agent"这一工程模式的可行性（BadCase发现85%+）。文章对非确定性根源（Temperature/Top-P机制+分词器差异+训练参数差异）和上下文工程（4种失效场景+逻辑拆分/内容精简/强制约束/Few-Shot 5种对策）的拆解是LLM工程落地的宝贵经验
+- **冲突**: 无
+
+## [2026-06-23] ingest | 摄入 Agent 评估工程实践系列 5 篇
+
+- **变更**: 新增 5 个来源摘要、1 个实体、4 个概念；增量更新 [[GraderTypes]]；更新 [[index.md]]
+- **新增来源**: [[摘要-agent-效果定义]]、[[摘要-指标体系设计]]、[[摘要-评估策略]]、[[摘要-评测方法和手段]]、[[摘要-评测集工程]]
+- **新增实体**: [[HuggingFace]]
+- **新增概念**: [[AgentEffect]]（Agent效果定义与多层次评估体系）、[[MetricsDesign]]（指标体系设计三原则：可量化/可自动评测/可归因）、[[EvaluationStrategy]]（四大评估策略：端到端vs分层+线下vs线上+打分vs对比+闭环）、[[EvalDatasetEngineering]]（评测集工程：四项要求+四种构建方法）
+- **核心洞察**: 这 5 篇构成 Agent 评估工程实践的完整闭环——从"什么是效果"到"怎么设计指标"到"选择什么策略"到"用什么方法"到"构建什么数据"。三原则（可量化→可自动评测→可归因）是指标体系设计的核心指导思想；闭环策略（评估→归因→优化）将评测从一次性验收变成持续迭代引擎；评测集工程强调 Garbage in garbage out——数据质量决定评估可信度
+- **冲突**: 无
+
+## [2026-06-23] ingest | 摄入 Anthropic Agent评估中文深度解读
+
+- **变更**: 新增 [[摘要-解读-anthropic-demystifying-evals]]; 增量更新 [[AgentEvaluation]]（错误传播累积机制+Swiss Cheese Model）、[[GraderTypes]]（LLM校准5偏差+三层流水线架构）、[[EvalHarness]]（Agent Harness vs 普通Harness对比表+环境隔离陷阱）; 更新 [[index.md]]
+- **核心增量价值**: 相比已摄入的英文原版，中文解读增加了大量结构化拆解——8个评估概念关系图、错误传播累积机制（错误≠失败/正确≠成功/路径依赖/评分器盲区）、三层评分流水线（代码→模型→人类）、LLM-as-Judge五大校准偏差及对策（评分漂移/标准不一致/位置偏见/长度偏见/自我提升）、Agent Harness vs 普通Harness五维对比、环境隔离常见陷阱（git历史残留/资源耗尽）、Swiss Cheese多层组合策略
+- **冲突**: 无
+
+- **变更**: 新增 5 个来源摘要、7 个实体、7 个概念；更新 [[index.md]]
+- **新增来源**: [[摘要-evaluate-agent-workflows-openai-api]], [[摘要-demystifying-evals-for-ai-agents]], [[摘要-ai-agent-evaluation-quickstart-deepeval]], [[摘要-agent-evaluation-a-detailed-guide]], [[摘要-ai-agent-skill-测评方案及落地实践]]
+- **新增实体**: [[DeepEval]], [[TPerf]], [[Knot]], [[CodeBuddy]], [[CameronRWolfe]], [[SWE-bench]]
+- **新增概念**: [[AgentEvaluation]], [[GraderTypes]], [[passAtK]], [[EvalHarness]], [[CapabilityVsRegressionEval]], [[BaselineBasedEvaluation]], [[Trace]]
+- **核心洞察**: Agent 评估已形成完整方法论体系——Anthropic 的权威指南奠定理论基础（三类评分器、pass@k/pass^k 指标、8 步路线图），腾讯 TEG 的落地实践展示工程化全貌（五大维度、基线管理、CI 自动化、7 模型对比），OpenAI/DeepEval 提供平台化工具支撑。评估从"可选防护"变成 Agent 开发的"核心前提"。
+- **冲突**: 无
+
 ## [2026-06-18] ingest | 完成raw/01-articles文件夹全部摄入
 
 - **变更**: 新增来源 [[摘要-the-complete-guide-building-skill-claude-pdf]]; 更新 [[index.md]]

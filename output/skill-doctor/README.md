@@ -1,188 +1,114 @@
-# Skill Doctor —— Skill体检诊断工具
+# Skill Doctor —— Skill Health Check Tool
 
-> 一个完全遵循《Skill课程最佳实践》的Skill体检诊断工具
+[English](README.md) | [简体中文](README.zh-CN.md)
 
-## 🎯 功能特性
+> Built on the best practices from [hands-on-skill](https://github.com/liuchunming033/hands-on-skill).
 
-- ✅ **九大体检项目**：description、gotchas、文件组织、过度约束、已知知识、内存配置、脚本、hooks、markdown格式
-- ✅ **自动化检查**：Python脚本自动分析，生成JSON报告和Markdown建议
-- ✅ **评分系统**：A/B/C/D四级评分，量化Skill质量
-- ✅ **优化建议**：针对每个问题提供具体的修复建议
-- ✅ **最佳实践示例**：包含大量Before/After对比示例
+## Features
 
-## 📦 安装使用
+- **9 Health Checks**: description, gotchas, file organization, over-constraint, known knowledge, memory config, scripts, hooks, markdown format
+- **Lightweight Skill Exemption**: single-file skills ≤80 lines are auto-recognized and exempt from auxiliary file requirements
+- **Interactive Optimization**: presents an options list with expected score gains and benefit estimates — you choose what to fix
+- **Automated Analysis**: Python script-based analysis producing JSON reports and Markdown suggestions
+- **Grading System**: A/B/C/D four-tier grading to quantify Skill quality
+- **Actionable Suggestions**: specific fix recommendations for every issue found
+- **Best Practice Examples**: extensive Before/After comparison examples
 
-### 前置要求
+## Installation
 
-- Python 3.6+（推荐Python 3.13）
-- 需要标准库（无需额外依赖）
+### Option 1: Tell Your Agent (Recommended)
 
-### 方式一：直接使用（推荐）
+> "Install skill-doctor from `github.com/liuchunming033/skill-doctor`."
 
-```bash
-# 克隆仓库
-git clone https://github.com/yourusername/skill-doctor.git
+Your Agent will auto-clone and place it correctly.
 
-# 进入目录
-cd skill-doctor
-
-# 运行体检（使用python3）
-python3 scripts/analyze_skill.py <skill_path>
-
-# 输出JSON报告
-python3 scripts/analyze_skill.py <skill_path> --output json
-
-# 输出Markdown报告
-python3 scripts/analyze_skill.py <skill_path> --output markdown
-
-# 同时输出两种格式
-python3 scripts/analyze_skill.py <skill_path> --output both
-```
-
-### 方式二：作为Claude Code Skill使用
-
-将skill-doctor目录复制到你的Claude Code skills目录：
+### Option 2: `npx skills add`
 
 ```bash
-cp -r skill-doctor ~/.claude/skills/
+# Project-level (./.claude/skills or your Agent's skills directory)
+npx skills add liuchunming033/skill-doctor
+
+# Global (available across all projects)
+npx skills add liuchunming033/skill-doctor -g
 ```
 
-然后在Claude Code中说：
+### Usage
+
+Once installed, say in conversation:
+
 ```
-检查这个Skill：path/to/your/skill
-```
-
-## 🔧 九大体检项目
-
-| 检查项 | 检查内容 | 通过标准 |
-|-------|---------|---------|
-| **description检查** | 是否写成触发条件 | 包含触发关键词，长度<100字符 |
-| **gotchas检查** | 是否有坑点记录 | gotchas.md存在且内容充实 |
-| **文件组织检查** | 是否合理拆分文件 | 主文件<200行，有附属文件 |
-| **过度约束检查** | 是否过度约束路径 | 没有死板流程，有决策点 |
-| **已知知识检查** | 是否重复已知内容 | 没有教程式内容 |
-| **内存配置检查** | 是否有config.json | config.json存在且合理 |
-| **脚本检查** | 是否需要脚本但缺失 | 有scripts目录且脚本完整 |
-| **hooks检查** | hooks配置是否正确 | 格式正确，matcher准确 |
-| **markdown格式检查** | 格式是否规范 | YAML、表格、代码块正确 |
-
-## 📊 评分等级
-
-- **A（90-100分）**：优秀，遵循所有最佳实践
-- **B（75-89分）**：良好，有少量优化空间
-- **C（60-74分）**：合格，有明显改进点
-- **D（<60分）**：不合格，需要重构
-
-## 📝 使用示例
-
-### 示例1：体检一个PDF Skill
-
-```bash
-$ python3 scripts/analyze_skill.py ./my-pdf-skill
-
-Skill体检报告：my-pdf-skill
-
-总体评分
-得分：85/100
-等级：B (良好)
-
-各项检查得分：
-✅ description：95/100
-⚠️ gotchas：70/100
-   - 问题：gotchas.md内容太少(350字节)
-   - 建议：补充内容至500字节以上
-✅ file_organization：90/100
-⚠️ over_constraint：70/100
-   - 问题：包含死板流程(4个步骤标记)
-   - 建议：改为决策框架，描述目标而非路径
-...
-
-优化建议：
-- 补充内容至500字节以上
-- 改为决策框架，描述目标而非路径
+Check this Skill: path/to/your/skill
 ```
 
-### 示例2：生成详细报告
+Skill Doctor loads the target Skill, runs all nine health checks, generates a diagnostic report, and presents interactive optimization options.
 
-```bash
-$ python3 scripts/analyze_skill.py ./my-skill --output markdown > report.md
-```
+## Health Checks
 
-### 示例3：skill-doctor自身体检
+Covers nine dimensions: description, gotchas, file organization, over-constraint, known knowledge, memory config, scripts, hooks, and markdown format. See [SKILL.md](SKILL.md) for details.
 
-```bash
-$ python3 scripts/analyze_skill.py . --output both
+## Scoring
 
-得分：84/100
-等级：B (良好)
+Four tiers: A (90-100) / B (75-89) / C (60-74) / D (<60). See [SKILL.md](SKILL.md) for details.
 
-说明：skill-doctor自身也遵循最佳实践，体检得分84分。
-主要优化点：gotchas中包含占位符、checklists有死板流程标记（检查清单特性）。
-```
-
-## 🏗️ 文件结构
+## Directory Structure
 
 ```
 skill-doctor/
-├── SKILL.md              # 核心逻辑（遵循最佳实践）
-├── gotchas.md            # 坑点记录（10个真实坑点）
-├── checklists.md         # 详细检查清单
-├── examples.md           # Before/After优化示例
-├── config.json           # 检查规则配置
-├── README.md             # 使用说明
+├── SKILL.md              # Core logic (follows best practices)
+├── gotchas.md            # Gotchas (17 real pitfalls recorded)
+├── examples.md           # Before/After optimization examples
+├── README.md             # Usage guide (English)
+├── README.zh-CN.md       # Usage guide (Simplified Chinese)
+├── reference/
+│   └── checklists.md     # Detailed checklists
+├── config/
+│   └── config.json       # Check rule configuration
 └── scripts/
-    └── analyze_skill.py  # 自动化体检脚本
+    └── analyze_skill.py  # Automated health check script
 ```
 
-## ✅ 遵循的最佳实践
+## Best Practices Followed
 
-这个skill-doctor本身严格遵循《Skill课程》的所有最佳实践：
+This skill-doctor itself strictly follows all best practices from [hands-on-skill](https://github.com/liuchunming033/hands-on-skill):
 
-- ✅ **description写成触发条件**（不是功能说明）
-- ✅ **gotchas充实有价值**（10个真实坑点）
-- ✅ **文件组织合理**（主文件<200行，有附属文件）
-- ✅ **避免过度约束**（描述决策框架）
-- ✅ **不写已知知识**（只补充Skill特有知识）
-- ✅ **有内存配置**（config.json）
-- ✅ **有稳定脚本**（analyze_skill.py）
-- ✅ **Markdown格式规范**（YAML、表格、代码块正确）
-- ✅ **渐进式披露**（详细内容在附属文件）
+- **description as trigger** (not a feature description)
+- **gotchas with substance** (17 real pitfalls recorded)
+- **three-category directory structure** (root: SKILL.md + gotchas.md + examples.md; reference/ for reference materials; config/ for configuration; scripts/ for scripts)
+- **no over-constraint** (describes decision frameworks, not rigid steps)
+- **no known knowledge** (only adds Skill-specific knowledge)
+- **persistent config** (config.json)
+- **stable scripts** (analyze_skill.py)
+- **proper Markdown** (YAML frontmatter, aligned tables, language-tagged code blocks)
+- **progressive disclosure** (details in auxiliary files, loaded on demand)
 
-## 🎓 相关课程
+## How It Works
 
-这个skill基于《Skill完整课程》开发：
+1. Script runs structured analysis (`python scripts/analyze_skill.py <skill_path> --output json`)
+2. Agent supplements the report with specific optimization suggestions, expected score gains, and effort estimates
+3. An interactive options list is presented — you choose which items to fix
+4. Accepted items are fixed in-place (files are modified directly)
+5. A re-check generates a before/after comparison report
 
-- **认知篇**：心智模型、渐进式披露、自由度设计
-- **设计篇**：五大设计模式
-- **实战篇**：description、gotchas、文件组织、脚本、hooks
-- **评估篇**：评估指标、A/B测试
-- **运营篇**：长期维护、团队管理
+## Contribution Guide
 
-## 🤝 贡献指南
+Contributions welcome!
 
-欢迎贡献！
+1. Fork this repo
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-1. Fork本仓库
-2. 创建特性分支 (`git checkout -b feature/AmazingFeature`)
-3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
-4. 推送到分支 (`git push origin feature/AmazingFeature`)
-5. 开启Pull Request
+## License
 
-## 📄 许可证
+MIT License — see [LICENSE](LICENSE)
 
-本项目采用 MIT 许可证 - 详见 [LICENSE](LICENSE) 文件
+## Acknowledgments
 
-## 🙏 致谢
-
-- 感谢Anthropic提供的Skill最佳实践
-- 感谢Google、OpenAI的企业级实践案例
-- 感谢开源社区的贡献
-
-## 📮 联系方式
-
-- 项目主页：https://github.com/yourusername/skill-doctor
-- 问题反馈：https://github.com/yourusername/skill-doctor/issues
+- Thanks to Anthropic for Skill best practices
+- Thanks to Google and OpenAI for enterprise-level case studies
+- Thanks to the open-source community for contributions
 
 ---
 
-**用skill-doctor，让每个Skill都成为精品！** 🎯
+**Use skill-doctor to make every Skill a masterpiece.**

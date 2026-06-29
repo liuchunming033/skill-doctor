@@ -1,3 +1,11 @@
+---
+title: "解读Anthropic 文章 《Equipping agents for the real world with Agent Skills》"
+source: ""
+created: "2026-06-29 18:26"
+tags:
+  - clipping
+ingested: false
+---
 # 解读Anthropic 文章 《Equipping agents for the real world with Agent Skills》
 
 > 精读Anthropic 文章 《Equipping agents for the real world with Agent Skills》

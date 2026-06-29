@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skill Doctor — AI Agent Skill 体检诊断工具</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f7f5f2;
+  --surface: #ffffff;
+  --clinical-blue: #1a3a4a;
+  --teal: #0d9488;
+  --teal-glow: #14b8a6;
+  --amber: #d97706;
+  --red: #dc2626;
+  --green: #16a34a;
+  --text: #1e293b;
+  --text-muted: #64748b;
+  --border: #e2e0dc;
+  --ekg-line: #0d9488;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Noto Sans SC', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* Noise texture overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.6;
+}
+
+.container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+/* Hero */
+.hero {
+  padding: 80px 0 60px;
+  position: relative;
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--clinical-blue);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 6px 16px;
+  border-radius: 100px;
+  letter-spacing: 0.5px;
+  margin-bottom: 32px;
+}
+.hero-badge .dot {
+  width: 7px; height: 7px;
+  background: var(--teal-glow);
+  border-radius: 50%;
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(1.6); }
+}
+
+.hero h1 {
+  font-family: 'DM Serif Display', 'Noto Sans SC', serif;
+  font-size: clamp(48px, 8vw, 88px);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -1px;
+  color: var(--clinical-blue);
+  margin-bottom: 24px;
+}
+.hero h1 .accent {
+  color: var(--teal);
+  position: relative;
+}
+.hero h1 .accent::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 0;
+  width: 100%;
+  height: 8px;
+  background: var(--teal-glow);
+  opacity: 0.2;
+  border-radius: 4px;
+}
+.hero .subtitle {
+  font-size: 19px;
+  color: var(--text-muted);
+  max-width: 540px;
+  line-height: 1.7;
+  margin-bottom: 40px;
+}
+.hero-cta {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 14px 28px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+.btn-primary {
+  background: var(--clinical-blue);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(26, 58, 74, 0.25);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(26, 58, 74, 0.35); }
+.btn-outline {
+  background: var(--surface);
+  color: var(--clinical-blue);
+  border: 1.5px solid var(--border);
+}
+.btn-outline:hover { border-color: var(--clinical-blue); transform: translateY(-2px); }
+
+/* EKG decorative line */
+.ekg {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.12;
+  width: 320px;
+  height: 140px;
+  pointer-events: none;
+}
+.ekg svg { width: 100%; height: 100%; }
+.ekg path {
+  fill: none;
+  stroke: var(--teal);
+  stroke-width: 2;
+  stroke-dasharray: 1200;
+  stroke-dashoffset: 1200;
+  animation: draw-ekg 2.5s ease-out forwards;
+}
+@keyframes draw-ekg {
+  to { stroke-dashoffset: 0; }
+}
+
+/* Stats bar */
+.stats-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 80px;
+}
+.stat-item {
+  background: var(--surface);
+  padding: 28px 24px;
+  text-align: center;
+}
+.stat-value {
+  font-family: 'DM Serif Display', serif;
+  font-size: 40px;
+  color: var(--clinical-blue);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.stat-label {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+/* Section */
+.section { padding: 80px 0; }
+.section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--teal);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+.section h2 {
+  font-family: 'DM Serif Display', 'Noto Sans SC', serif;
+  font-size: clamp(32px, 5vw, 48px);
+  font-weight: 400;
+  color: var(--clinical-blue);
+  line-height: 1.2;
+  margin-bottom: 20px;
+}
+.section p.lead {
+  font-size: 17px;
+  color: var(--text-muted);
+  max-width: 600px;
+  line-height: 1.7;
+}
+
+/* Check dimensions grid */
+.checks-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 48px;
+}
+.check-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 28px 24px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.check-card:hover {
+  border-color: var(--teal);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(13, 148, 136, 0.1);
+}
+.check-card .check-icon {
+  font-size: 28px;
+  margin-bottom: 14px;
+  display: block;
+}
+.check-card h4 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--clinical-blue);
+  margin-bottom: 6px;
+}
+.check-card p {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* Report card */
+.report-card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  margin-top: 48px;
+  box-shadow: 0 4px 30px rgba(0,0,0,0.04);
+}
+.report-header {
+  background: var(--clinical-blue);
+  color: #fff;
+  padding: 28px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.report-header h3 {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  font-weight: 500;
+  opacity: 0.9;
+}
+.grade-badge {
+  font-family: 'DM Serif Display', serif;
+  font-size: 48px;
+  line-height: 1;
+  padding: 8px 20px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+}
+.grade-badge small { font-size: 20px; opacity: 0.7; }
+.report-body { padding: 32px; }
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.report-table th {
+  text-align: left;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+}
+.report-table td {
+  padding: 12px;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+}
+.report-table tr:last-child td { border-bottom: none; }
+.score-bar-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.score-bar {
+  width: 120px;
+  height: 6px;
+  background: #f1f0ed;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.score-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 1s ease;
+}
+.score-bar-fill.a { background: var(--green); }
+.score-bar-fill.b { background: #84cc16; }
+.score-bar-fill.c { background: var(--amber); }
+.score-bar-fill.d { background: var(--red); }
+
+/* Before / After */
+.before-after {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 48px;
+}
+.ba-card {
+  background: var(--surface);
+  border-radius: 14px;
+  padding: 28px;
+  border: 1px solid var(--border);
+}
+.ba-card.before { border-left: 4px solid var(--red); }
+.ba-card.after { border-left: 4px solid var(--green); }
+.ba-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.ba-card.before .ba-label { color: var(--red); }
+.ba-card.after .ba-label { color: var(--green); }
+.ba-metric {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+.ba-metric:last-child { border-bottom: none; }
+.ba-metric .metric-label { font-size: 14px; color: var(--text-muted); }
+.ba-metric .metric-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Timeline */
+.timeline {
+  margin-top: 48px;
+  position: relative;
+  padding-left: 32px;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 4px;
+  bottom: 4px;
+  width: 2px;
+  background: var(--border);
+}
+.tl-step {
+  position: relative;
+  margin-bottom: 32px;
+}
+.tl-step:last-child { margin-bottom: 0; }
+.tl-step::before {
+  content: '';
+  position: absolute;
+  left: -28px;
+  top: 6px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--teal);
+  border: 3px solid var(--bg);
+}
+.tl-step h4 { font-size: 16px; font-weight: 700; color: var(--clinical-blue); margin-bottom: 4px; }
+.tl-step p { font-size: 14px; color: var(--text-muted); }
+
+/* CTA section */
+.cta-section {
+  text-align: center;
+  padding: 100px 0;
+  background: var(--clinical-blue);
+  margin: 0 -24px;
+  border-radius: 24px;
+  color: #fff;
+}
+@media (max-width: 1080px) { .cta-section { border-radius: 0; } }
+.cta-section h2 {
+  font-family: 'DM Serif Display', 'Noto Sans SC', serif;
+  font-size: clamp(32px, 5vw, 48px);
+  font-weight: 400;
+  margin-bottom: 16px;
+}
+.cta-section p {
+  font-size: 17px;
+  opacity: 0.8;
+  max-width: 500px;
+  margin: 0 auto 32px;
+}
+.cta-section .btn {
+  background: var(--teal);
+  color: #fff;
+  font-size: 16px;
+  padding: 16px 36px;
+  box-shadow: 0 4px 24px rgba(13, 148, 136, 0.4);
+}
+.cta-section .btn:hover { background: var(--teal-glow); transform: translateY(-2px); }
+
+.code-block {
+  background: rgba(255,255,255,0.12);
+  border-radius: 10px;
+  padding: 16px 24px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  display: inline-block;
+  margin-top: 20px;
+  backdrop-filter: blur(10px);
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 40px 0;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero { padding: 48px 0 40px; }
+  .hero h1 { font-size: 42px; }
+  .stats-bar { grid-template-columns: repeat(2, 1fr); }
+  .checks-grid { grid-template-columns: 1fr; }
+  .before-after { grid-template-columns: 1fr; }
+  .ekg { display: none; }
+  .report-header { padding: 20px; }
+  .report-body { padding: 20px; }
+}
+@media (max-width: 480px) {
+  .container { padding: 0 16px; }
+  .hero h1 { font-size: 34px; }
+  .stats-bar { grid-template-columns: 1fr 1fr; }
+  .stat-value { font-size: 30px; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<!-- Hero -->
+<header class="hero">
+  <div class="hero-badge">
+    <span class="dot"></span> Open Source · MIT License
+  </div>
+  <h1>给你的 Agent Skill<br>做一次<span class="accent">全面体检</span></h1>
+  <p class="subtitle">九大维度自动诊断，交互式优化建议，Token 成本估算。<br>让每个 Skill 都从 C 级打磨到 A 级。</p>
+  <div class="hero-cta">
+    <a href="https://github.com/liuchunming033/skill-doctor" class="btn btn-primary" target="_blank">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+      GitHub
+    </a>
+    <a href="#how-it-works" class="btn btn-outline">看看怎么用 &darr;</a>
+  </div>
+  <div class="ekg">
+    <svg viewBox="0 0 320 140" fill="none">
+      <path d="M0,70 L40,70 L55,70 L65,20 L75,120 L85,70 L100,70 L115,70 L125,70 L135,20 L145,120 L155,70 L170,70 L185,70 L195,70 L205,20 L215,120 L225,70 L240,70 L260,70 L280,70 L300,70 L320,70" />
+    </svg>
+  </div>
+</header>
+
+<!-- Stats -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <div class="stat-value">9</div>
+    <div class="stat-label">体检维度</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-value">A-D</div>
+    <div class="stat-label">四级评分</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-value">~30s</div>
+    <div class="stat-label">完成诊断</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-value">+32</div>
+    <div class="stat-label">最高提分</div>
+  </div>
+</div>
+
+<!-- What it checks -->
+<section class="section" id="how-it-works">
+  <div class="section-label">// 01. Diagnostics</div>
+  <h2>九大体检项目</h2>
+  <p class="lead">从 description 触发条件到 markdown 格式规范，全面覆盖 Skill 质量维度。</p>
+
+  <div class="checks-grid">
+    <div class="check-card">
+      <span class="check-icon">&#128270;</span>
+      <h4>Description 检查</h4>
+      <p>是否写成触发条件而非功能说明，长度 &lt;100 字符</p>
+    </div>
+    <div class="check-card">
+      <span class="check-icon">&#9888;&#65039;</span>
+      <h4>Gotchas 检查</h4>
+      <p>坑点记录是否存在且充实，"现象-问题-解决"结构完整</p>
+    </div>
+    <div class="check-card">
+      <span class="check-icon">&#128451;&#65039;</span>
+      <h4>文件组织检查</h4>
+      <p>三分类标准 + 轻量 Skill 豁免，参考材料不放根目录</p>
+    </div>
+    <div class="check-card">
+      <span class="check-icon">&#127939;</span>
+      <h4>过度约束检查</h4>
+      <p>是否包含死板步骤，有无决策点框架</p>
+    </div>
+    <div class="check-card">
+      <span class="check-icon">&#128218;</span>
+      <h4>已知知识检查</h4>
+      <p>是否重复 Agent 已知内容，是否补充团队特有知识</p>
+    </div>
+    <div class="check-card">
+      <span class="check-icon">&#9881;&#65039;</span>
+      <h4>内存 / 脚本 / Hooks</h4>
+      <p>config.json 持久化、脚本封装、Hooks 安全防护</p>
+    </div>
+    <div class="check-card">
+      <span class="check-icon">&#128396;&#65039;</span>
+      <h4>Markdown 格式</h4>
+      <p>YAML frontmatter、表格对齐、代码块语言标注</p>
+    </div>
+    <div class="check-card">
+      <span class="check-icon">&#9889;</span>
+      <h4>轻量 Skill 豁免</h4>
+      <p>单文件 &le;80 行自动判定合理，不强制要求拆分</p>
+    </div>
+    <div class="check-card">
+      <span class="check-icon">&#128200;</span>
+      <h4>收益估算</h4>
+      <p>Token 节省 + 耗时浪费统计，优化 ROI 一目了然</p>
+    </div>
+  </div>
+</section>
+
+<!-- Sample Report -->
+<section class="section">
+  <div class="section-label">// 02. Sample Report</div>
+  <h2>体检报告长这样</h2>
+  <p class="lead">一份真实的前端设计 Skill 体检报告，从 61 分诊断到 89 分。</p>
+
+  <div class="report-card">
+    <div class="report-header">
+      <div>
+        <h3>PATIENT: frontend-design</h3>
+        <div style="font-size:12px;opacity:0.7;margin-top:4px;">2026-06-21 · 9 checks completed</div>
+      </div>
+      <div class="grade-badge">B<small>/89</small></div>
+    </div>
+    <div class="report-body">
+      <table class="report-table">
+        <thead>
+          <tr><th>检查项</th><th>得分</th><th>状态</th><th>权重</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Description</td>
+            <td><strong>90</strong></td>
+            <td><span class="score-bar-wrap"><span class="score-bar"><span class="score-bar-fill a" style="width:90%"></span></span>A</span></td>
+            <td>1.5x</td>
+          </tr>
+          <tr>
+            <td>Gotchas</td>
+            <td><strong>40</strong></td>
+            <td><span class="score-bar-wrap"><span class="score-bar"><span class="score-bar-fill d" style="width:40%"></span></span>D</span></td>
+            <td>2.0x</td>
+          </tr>
+          <tr>
+            <td>文件组织</td>
+            <td><strong>70</strong></td>
+            <td><span class="score-bar-wrap"><span class="score-bar"><span class="score-bar-fill c" style="width:70%"></span></span>C</span></td>
+            <td>1.0x</td>
+          </tr>
+          <tr>
+            <td>过度约束</td>
+            <td><strong>85</strong></td>
+            <td><span class="score-bar-wrap"><span class="score-bar"><span class="score-bar-fill b" style="width:85%"></span></span>B</span></td>
+            <td>1.0x</td>
+          </tr>
+          <tr>
+            <td>已知知识</td>
+            <td><strong>85</strong></td>
+            <td><span class="score-bar-wrap"><span class="score-bar"><span class="score-bar-fill b" style="width:85%"></span></span>B</span></td>
+            <td>1.0x</td>
+          </tr>
+          <tr>
+            <td>Markdown 格式</td>
+            <td><strong>95</strong></td>
+            <td><span class="score-bar-wrap"><span class="score-bar"><span class="score-bar-fill a" style="width:95%"></span></span>A</span></td>
+            <td>1.0x</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- Before/After -->
+<section class="section">
+  <div class="section-label">// 03. Optimization</div>
+  <h2>优化前后对比</h2>
+  <p class="lead">接受 5 项优化建议后，总分从 61 (C) 跃升到 89 (B)。</p>
+
+  <div class="before-after">
+    <div class="ba-card before">
+      <div class="ba-label">&#9679; Before</div>
+      <div class="ba-metric"><span class="metric-label">总分</span><span class="metric-value" style="color:var(--amber)">61 (C)</span></div>
+      <div class="ba-metric"><span class="metric-label">Description</span><span class="metric-value">399 字符</span></div>
+      <div class="ba-metric"><span class="metric-label">Gotchas</span><span class="metric-value" style="color:var(--red)">不存在</span></div>
+      <div class="ba-metric"><span class="metric-label">Token 浪费</span><span class="metric-value" style="color:var(--red)">~500/次</span></div>
+      <div class="ba-metric"><span class="metric-label">耗时浪费</span><span class="metric-value" style="color:var(--red)">~6min/次</span></div>
+    </div>
+    <div class="ba-card after">
+      <div class="ba-label">&#9679; After</div>
+      <div class="ba-metric"><span class="metric-label">总分</span><span class="metric-value" style="color:var(--green)">89 (B) +28</span></div>
+      <div class="ba-metric"><span class="metric-label">Description</span><span class="metric-value">98 字符</span></div>
+      <div class="ba-metric"><span class="metric-label">Gotchas</span><span class="metric-value" style="color:var(--green)">8 个真实坑点</span></div>
+      <div class="ba-metric"><span class="metric-label">Token 节省</span><span class="metric-value" style="color:var(--green)">~330/次</span></div>
+      <div class="ba-metric"><span class="metric-label">耗时消除</span><span class="metric-value" style="color:var(--green)">~0/次</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- How it works -->
+<section class="section">
+  <div class="section-label">// 04. Workflow</div>
+  <h2>三步完成体检</h2>
+  <p class="lead">脚本负责稳定层（评分计算），Agent 负责智能层（优化建议、交互、执行修改）。</p>
+
+  <div class="timeline">
+    <div class="tl-step">
+      <h4>1. 运行诊断脚本</h4>
+      <p><code>python scripts/analyze_skill.py &lt;path&gt; --output json</code> 自动扫描九大维度，生成结构化报告。</p>
+    </div>
+    <div class="tl-step">
+      <h4>2. 选择优化项</h4>
+      <p>Agent 补充具体优化建议 + 预期提分 + 工作量评估，你勾选要修复的项。</p>
+    </div>
+    <div class="tl-step">
+      <h4>3. 自动修复 & 对比</h4>
+      <p>Agent 直接修改文件，修复后重新体检，输出前后对比报告。</p>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <h2>让你的每个 Skill 都成为精品</h2>
+    <p>开源、免费、MIT 协议。一行命令安装，30 秒完成诊断。</p>
+    <a href="https://github.com/liuchunming033/skill-doctor" class="btn" target="_blank">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+      Star on GitHub
+    </a>
+    <div class="code-block">npx skills add liuchunming033/skill-doctor</div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <p>Skill Doctor · MIT License · <a href="https://github.com/liuchunming033/skill-doctor" style="color:var(--teal);text-decoration:none;">github.com/liuchunming033/skill-doctor</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

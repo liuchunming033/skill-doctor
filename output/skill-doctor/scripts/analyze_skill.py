@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
 Skill Doctor - Skill体检诊断脚本
@@ -44,7 +44,7 @@ class SkillDoctor:
         return {
             "check_weights": {
                 "description": 1.5,
-                "gotchas": 1.5,
+                "gotchas": 2.0,
                 "file_organization": 1.0,
                 "over_constraint": 1.0,
                 "known_knowledge": 1.0,
@@ -52,7 +52,11 @@ class SkillDoctor:
                 "scripts": 1.0,
                 "hooks": 1.0,
                 "markdown_format": 1.0,
-                "comprehensive": 1.0
+                "comprehensive": 1.0,
+                "progressive_disclosure": 1.5,
+                "logs": 1.0,
+                "iteration": 1.0,
+                "config_location": 1.0
             },
             "score_thresholds": {
                 "grade_A": 90,
@@ -63,13 +67,15 @@ class SkillDoctor:
             "max_description_length": 100,
             "max_skillmd_lines": 200,
             "min_gotchas_bytes": 500,
-            "min_gotchas_items": 3
+            "min_gotchas_items": 3,
+            "skip_checks": [],
+            "language": "zh-CN"
         }
 
     def analyze(self):
         """全面体检"""
         results = {
-            "skill_name": self.skill_path.name,
+            "skill_name": self.skill_path.resolve().name or self.skill_path.resolve().parent.name,
             "overall_score": 0,
             "grade": "",
             "check_results": {},
@@ -100,6 +106,11 @@ class SkillDoctor:
             score, issues, suggestions = check_func()
             weight = self.config["check_weights"][check_name]
 
+            # N/A项（score为None）不计入加权总分
+            if score is not None:
+                total_weighted_score += score * weight
+                total_weight += weight
+
             results["check_results"][check_name] = {
                 "score": score,
                 "weight": weight,
@@ -107,11 +118,8 @@ class SkillDoctor:
                 "suggestions": suggestions
             }
 
-            total_weighted_score += score * weight
-            total_weight += weight
-
-            # 收集优先修复项
-            if score < 70:
+            # 收集优先修复项（N/A项跳过）
+            if score is not None and score < 70:
                 for issue in issues[:2]:
                     results["priority_fixes"].append(
                         "立即修复({}): {}".format(check_name, issue)
@@ -120,8 +128,8 @@ class SkillDoctor:
             # 收集优化建议
             results["suggestions"].extend(suggestions)
 
-        # 计算总分
-        results["overall_score"] = int(total_weighted_score / total_weight)
+        # 计算总分（仅计入非N/A项）
+        results["overall_score"] = int(total_weighted_score / total_weight) if total_weight > 0 else 0
 
         # 确定等级
         score = results["overall_score"]
@@ -223,24 +231,24 @@ class SkillDoctor:
                 suggestions.append("补充内容至{}字节以上".format(
                     self.config['min_gotchas_bytes']))
 
-            # 检查占位符
-            placeholders = ["暂无", "TODO", "待补充", "待完善"]
-            for placeholder in placeholders:
-                if placeholder in content:
-                    issues.append("包含占位符'{}'".format(placeholder))
-                    suggestions.append("补充真实坑点")
-
-            # 检查坑点数量
+            # 先检查坑点数量和结构
             gotchas_count = content.count("## 坑点")
             if gotchas_count < self.config["min_gotchas_items"]:
                 issues.append("坑点数量太少({}个)".format(gotchas_count))
                 suggestions.append("补充至少{}个坑点".format(
                     self.config['min_gotchas_items']))
 
-            # 检查结构
             if "现象" not in content or "问题" not in content or "解决" not in content:
                 issues.append("缺少'现象-问题-解决'结构")
                 suggestions.append("每个坑点包含：现象、问题、解决")
+
+            # 检查占位符（只有坑点数量不足时才检查，否则视为教学引用）
+            if gotchas_count < self.config["min_gotchas_items"]:
+                placeholders = ["暂无", "TODO", "待补充", "待完善"]
+                for placeholder in placeholders:
+                    if placeholder in content:
+                        issues.append("包含占位符'{}'".format(placeholder))
+                        suggestions.append("补充真实坑点")
 
             # 计算得分
             if len(issues) == 0:
@@ -256,35 +264,83 @@ class SkillDoctor:
         return (score, issues, suggestions)
 
     def check_file_organization(self):
-        """检查文件组织"""
+        """检查文件组织（三分类标准，区分轻量Skill与需拆分Skill）"""
         issues = []
         suggestions = []
 
         # 检查SKILL.md行数
         skillmd_path = self.skill_path / "SKILL.md"
+        skillmd_lines = 0
         if skillmd_path.exists():
             with open(skillmd_path) as f:
-                lines = len(f.readlines())
+                skillmd_lines = len(f.readlines())
 
-            if lines > self.config["max_skillmd_lines"]:
-                issues.append("SKILL.md过长({}行)".format(lines))
+        # 收集根目录 .md 文件（排除README）
+        all_md_files = list(self.skill_path.glob("*.md"))
+        non_readme_md = [f for f in all_md_files
+                         if f.name not in ("README.md", "README.zh.md")]
+        has_reference = (self.skill_path / "reference").exists()
+        lightweight_max = self.config.get("lightweight_skill_max_lines", 80)
+        should_split_min = self.config.get("should_split_min_lines", 150)
+
+        # === 轻量Skill判定：单文件且足够短 ===
+        is_lightweight = (skillmd_lines <= lightweight_max
+                          and len(non_readme_md) == 1
+                          and not has_reference)
+
+        if is_lightweight:
+            # 轻量Skill：职责单一，不需要附属文件，直接给高分
+            score = 92
+            if skillmd_lines <= lightweight_max // 2:
+                suggestions.append("轻量Skill，结构合理，无需拆分")
+            return (score, issues, suggestions)
+
+        # === 非轻量Skill：正常检查 ===
+
+        # 检查SKILL.md行数
+        if skillmd_lines > self.config["max_skillmd_lines"]:
+            if has_reference:
+                suggestions.append(
+                    "SKILL.md仍过长({}行)，但已有reference/目录说明拆分意识良好".format(skillmd_lines))
+            else:
+                issues.append("SKILL.md过长({}行)".format(skillmd_lines))
                 suggestions.append("缩短至{}行内，详细内容拆分到附属文件".format(
                     self.config['max_skillmd_lines']))
+        elif skillmd_lines > should_split_min:
+            # 超过拆分线但未达到硬上限：温和提醒
+            md_only = [f for f in non_readme_md if f.name != "SKILL.md"]
+            if not md_only and not has_reference:
+                suggestions.append("SKILL.md({}行)建议拆分为gotchas.md等附属文件".format(skillmd_lines))
+
+        # 检查根目录下是否有纯参考类 .md 文件（非核心三文件）
+        root_md_files = [f for f in non_readme_md
+                         if f.name not in ("SKILL.md", "gotchas.md", "examples.md")]
+        if root_md_files:
+            file_names = [f.name for f in root_md_files]
+            issues.append("根目录有参考类文件({})".format(", ".join(file_names)))
+            suggestions.append("将参考类文件移入reference/目录(如{})".format(file_names[0]))
 
         # 检查是否有附属文件
-        all_files = list(self.skill_path.glob("*.md"))
-        if len(all_files) == 1:  # 只有SKILL.md
+        if len(non_readme_md) == 1:  # 只有SKILL.md
+            # 该拆没拆 vs 简单够用（已在上方lightweight/suggest分支处理）
             issues.append("缺少附属文件")
             suggestions.append("创建gotchas.md、examples.md等附属文件")
 
-        # 检查是否有references目录
-        has_references = (self.skill_path / "references").exists()
-        if not has_references and len(all_files) <= 2:
-            suggestions.append("考虑创建references目录组织详细内容")
+        # 检查是否有reference目录（统一用单数）
+        if not has_reference and len(non_readme_md) <= 2:
+            suggestions.append("考虑创建reference目录组织详细内容")
+
+        # 检查reference目录是否非空
+        if has_reference:
+            ref_files = list((self.skill_path / "reference").glob("*"))
+            if len(ref_files) == 0:
+                suggestions.append("reference目录为空，建议补充参考材料或移除")
 
         # 计算得分
-        if len(issues) == 0:
+        if len(issues) == 0 and len(suggestions) <= 1:
             score = 90
+        elif len(issues) == 0 or (len(issues) == 1 and has_reference):
+            score = 75
         elif len(issues) <= 1:
             score = 70
         else:
@@ -305,8 +361,8 @@ class SkillDoctor:
             with open(skillmd_path) as f:
                 content = f.read()
 
-            # 检查死板流程
-            step_patterns = ["第一步", "第二步", "Step 1", "Step 2", "1.", "2.", "3."]
+            # 检查死板流程（只检测显式步骤标记，避免误伤普通编号列表）
+            step_patterns = ["第一步", "第二步", "第三步", "Step 1", "Step 2", "Step 3"]
             has_steps = sum(1 for pattern in step_patterns if pattern in content)
 
             if has_steps >= 3:
@@ -346,11 +402,21 @@ class SkillDoctor:
             with open(skillmd_path) as f:
                 content = f.read()
 
+            # 排除 YAML frontmatter 和代码块，避免自描述误判
+            clean_content = content
+            if content.startswith("---"):
+                yaml_end = content.find("---", 3)
+                if yaml_end != -1:
+                    clean_content = content[yaml_end + 3:]
+            # 排除代码块内容
+            import re
+            clean_content = re.sub(r'```[\s\S]*?```', '', clean_content)
+
             # 检查教程式表述
             tutorial_patterns = ["什么是", "介绍", "教程", "入门", "指南"]
-            has_tutorial = sum(1 for pattern in tutorial_patterns if pattern in content)
+            has_tutorial = sum(1 for pattern in tutorial_patterns if pattern in clean_content)
 
-            if has_tutorial >= 2:
+            if has_tutorial >= 3:
                 issues.append("包含教程式内容({}处)".format(has_tutorial))
                 suggestions.append("删除Agent已知知识，只补充团队特有知识")
 
@@ -381,8 +447,8 @@ class SkillDoctor:
 
         config_path = self.skill_path / "config.json"
         if not config_path.exists():
-            # Skill可能不需要配置，返回N/A
-            return (90, [], ["如果需要持久化配置，创建config.json"])
+            # Skill可能不需要配置，返回N/A（不计入总分）
+            return (None, [], ["如果需要持久化配置，创建config.json"])
 
         try:
             with open(config_path) as f:
@@ -421,20 +487,25 @@ class SkillDoctor:
 
         scripts_path = self.skill_path / "scripts"
         if not scripts_path.exists():
-            # Skill可能不需要脚本，返回N/A
-            return (90, [], ["如果需要稳定能力封装，创建scripts目录"])
+            # Skill可能不需要脚本，返回N/A（不计入总分）
+            return (None, [], ["如果需要稳定能力封装，创建scripts目录"])
 
-        # 检查是否有Python脚本
-        py_scripts = list(scripts_path.glob("*.py"))
-        if len(py_scripts) == 0:
-            issues.append("scripts目录缺少Python脚本")
-            suggestions.append("创建稳定能力脚本")
+        # 检查是否有脚本文件（支持 Python、Node.js、Shell、TypeScript）
+        scripts = list(scripts_path.glob("*.py")) + \
+                  list(scripts_path.glob("*.js")) + \
+                  list(scripts_path.glob("*.sh")) + \
+                  list(scripts_path.glob("*.ts"))
+        if len(scripts) == 0:
+            issues.append("scripts目录缺少脚本文件")
+            suggestions.append("创建稳定能力脚本（.py / .js / .sh）")
 
-        # 检查脚本是否有注释
-        for script in py_scripts:
+        # 检查脚本是否有注释或用法说明
+        for script in scripts:
             with open(script) as f:
                 content = f.read()
-            if not content.startswith("#") or "用法" not in content:
+            has_comment = any(marker in content[:500] for marker in
+                          ["#", "//", "/*", '"""', "用法", "Usage", "usage"])
+            if not has_comment:
                 issues.append("{}缺少注释或用法说明".format(script.name))
                 suggestions.append("为{}添加注释".format(script.name))
 
@@ -471,9 +542,9 @@ class SkillDoctor:
                     issues.append("hooks缺少matcher")
                     suggestions.append("添加matcher字段")
 
-        # 如果没有hooks，返回N/A
+        # 如果没有hooks，返回N/A（不计入总分）
         if not has_hooks_in_skillmd:
-            return (90, [], ["如果需要监控或拦截，配置hooks"])
+            return (None, [], ["如果需要监控或拦截，配置hooks"])
 
         # 计算得分
         if len(issues) == 0:
@@ -560,8 +631,12 @@ class SkillDoctor:
 
         # 添加各项检查结果
         for check_name, check_result in results["check_results"].items():
-            status_icon = "✅" if check_result["score"] >= 90 else "⚠️" if check_result["score"] >= 70 else "❌"
-            report += "{} **{}**：{}/100\n".format(status_icon, check_name, check_result['score'])
+            score = check_result["score"]
+            if score is None:
+                report += "⚪ **{}**：N/A\n".format(check_name)
+            else:
+                status_icon = "✅" if score >= 90 else "⚠️" if score >= 70 else "❌"
+                report += "{} **{}**：{}/100\n".format(status_icon, check_name, score)
 
             if check_result["issues"]:
                 report += "   - 问题：{}\n".format(', '.join(check_result['issues']))
@@ -603,8 +678,19 @@ def main():
 
     args = parser.parse_args()
 
+    # 自动加载脚本同级目录的 config.json（如果未显式指定）
+    # 依次尝试 config/config.json（新三分类结构）和根目录 config.json（向后兼容）
+    config = args.config
+    if not config:
+        config_dir = Path(__file__).parent.parent / "config" / "config.json"
+        root_config = Path(__file__).parent.parent / "config.json"
+        if config_dir.exists():
+            config = str(config_dir)
+        elif root_config.exists():
+            config = str(root_config)
+
     # 运行体检
-    doctor = SkillDoctor(args.skill_path, args.config)
+    doctor = SkillDoctor(args.skill_path, config)
     results = doctor.analyze()
 
     # 输出结果

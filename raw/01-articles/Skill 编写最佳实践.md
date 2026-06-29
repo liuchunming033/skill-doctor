@@ -1,3 +1,9 @@
+---
+title: "Skill 编写最佳实践"
+source: ""
+created: "2026-06-29"
+tags: [clipping]
+---
 # Skill 编写最佳实践
 
 了解如何编写 Claude 能够发现并成功使用的高效 Skill。
@@ -472,7 +478,7 @@ with pdfplumber.open("file.pdf") as pdf:
 
 **Form filling**: See [FORMS.md](FORMS.md) for complete guide
 **API reference**: See [REFERENCE.md](REFERENCE.md) for all methods
-**Examples**: See [EXAMPLES.md](EXAMPLES.md) for common patterns
+**Examples**: See [EXAMPLES.md](examples.md) for common patterns
 ```
 
 

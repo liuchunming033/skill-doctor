@@ -54,6 +54,22 @@
 - [[摘要-openspec-schema-templates]] — OpenSpec Schema 5个模板文件:proposal/spec/design/tasks/plan,均含SHA256锁定机制
 - [[摘要-skill-anthropic-doc-complete]] — Anthropic官方文档完整解读:诞生背景/Skill定义/三要素构成/渐进式披露/四步开发流程/安全规范,2025年12月成为跨平台开放标准
 - [[摘要-the-complete-guide-building-skill-claude-pdf]] — Anthropic官方Skill构建完整指南PDF文档链接,提供从概念到实践的系统性指导
+- [[摘要-evaluate-agent-workflows-openai-api]] — OpenAI Agent工作流评估工具：Trace调试→数据集→Eval Runs三步流程
+- [[摘要-demystifying-evals-for-ai-agents]] — Anthropic Agent评估权威指南：三类评分器+能力vs回归评估+pass@k/pass^k指标+8步路线图
+- [[摘要-ai-agent-evaluation-quickstart-deepeval]] — DeepEval Agent评估快速入门：Tracing驱动的端到端与组件级评估
+- [[摘要-agent-evaluation-a-detailed-guide]] — Cameron Wolfe Agent评估综合指南：从评估基础概念到Harness基础设施设计
+- [[摘要-ai-agent-skill-测评方案及落地实践]] — 腾讯TEG Agent测评体系化实践：三类评分器+五大维度+基线管理+TPerf落地验证
+- [[摘要-解读-anthropic-demystifying-evals]] — Anthropic Agent评估中文深度解读：8个评估概念关系图+错误传播累积机制+三层评分流水线+LLM校准5偏差+Swiss Cheese组合策略
+- [[摘要-agent-效果定义]] — Agent效果定义与影响因素：核心能力+数据环境+评测难点+与传统QA的本质区别
+- [[摘要-指标体系设计]] — 指标体系设计：客观vs主观指标+三原则（可量化/可自动评测/可归因）+指标选择策略
+- [[摘要-评估策略]] — 四大评估策略：端到端vs分层+线下vs线上+打分vs对比+评估→归因→优化闭环
+- [[摘要-评测方法和手段]] — 三大评测手段：自动化评测（Rule-based/语义相似度）+人工评测（专家/众包）+LLM-as-Judge（单模型/多投票/成对比较）
+- [[摘要-评测集工程]] — 评测集工程：四项质量要求+四种构建方法（人工/日志挖掘/数据增强/合成数据）+公开数据集
+- [[摘要-ai评测ai-智能客服运营agent]] — 阿里云"AI评测AI"运营Agent：评估-诊断-优化三位一体+上下文工程4种失效模式+深度思考+多LLM对抗
+
+- [[摘要-rag-效果评估]] — RAG系统效果评估标准与方法：基于Ragas框架，三大评估方式+八大核心指标+评测集构建到执行评估全流程
+
+- [[摘要-评测集生产pipeline设计]] — 类RAG评测集生产Pipeline：多轨并行+统一Schema+6种GT类型+Adversarial 5策略+三层QC Gate+12周Roadmap
 
 ## Entities
 
@@ -75,6 +91,18 @@
 - [[OpenSpec]] — Fission AI的规约驱动开发框架，编码前先生成结构化Markdown规约
 - [[Playwright]] — Microsoft 开源 E2E 浏览器自动化框架，Gstack /qa skill 的真实浏览器执行引擎
 - [[Comet]] — 基于 OpenSpec+Superpowers 的开源 Skill，状态机调度五阶段流程，支持 28+ 平台
+- [[DeepEval]] — LLM评估框架，Tracing驱动的Agent端到端与组件级评估，支持CI/CD集成
+- [[TPerf]] — 腾讯性能测试平台，含AI分析Agent，Agent测评体系落地验证项目
+- [[Knot]] — 腾讯智能体平台，AG-UI协议，Agent部署与Trace数据获取
+- [[CodeBuddy]] — 腾讯AI代码助手，支持-p模式输出JSONL结构化Trace
+- [[CameronRWolfe]] — AI研究员/作者，《Agent Evaluation: A Detailed Guide》作者
+- [[SWE-bench]] — 编码Agent基准测试，通过真实GitHub Issues+测试套件评分
+- [[HuggingFace]] — 全球最大AI模型与数据集共享平台，公开评测集的主要获取来源
+- [[孙敦灿]] — 阿里云智能客服技术专家，行至，"AI评测AI"运营Agent体系作者
+- [[阿里云百炼]] — 阿里云大模型服务平台，提供LLM调用/Temperature-TopP动态调节/深度思考模式/限流管理
+- [[LangChain]] — LLM应用开发框架，在RAG评估场景中作为Ragas的LLM交互后端
+- [[LlamaIndex]] — RAG数据索引框架，通过SimpleDirectoryReader加载文档，可集成到Ragas评估流程
+- [[Ragas]] — RAG系统评估框架，提供八大核心指标（检索器+生成器）和从文档到测试集的全链路支持
 
 ## Concepts
 
@@ -114,6 +142,22 @@
 - [[ProductRequirementPipeline]] — AI驱动的五节点产品需求流水线，三大Agent技能串行执行
 - [[Software30]] — Software 3.0时代：自然语言驱动、上下文决定质量、知识库是核心竞争力
 - [[AtomicTDDWorkflow]] — 原子化TDD工作流：四层防护模型，任务粒度作为物理约束强制AI遵循TDD
+- [[AgentEvaluation]] — Agent评估方法论：Eval = 输入→执行→捕获Trace→检查规则→可对比分数，含错误传播累积机制和Swiss Cheese组合策略
+- [[GraderTypes]] — 三类评分器：确定性+LLM-as-Judge+人工，含评测方法细分+LLM非确定性根源（Temperature/Top-P）+多模型对抗方案
+- [[passAtK]] — pass@k（至少1次通过=峰值能力）与pass^k（每次都通过=稳定性）两个互补指标
+- [[EvalHarness]] — 评估框架：Agent Harness vs 普通Harness对比+环境隔离陷阱+Trace采集+Checkpoint中断恢复+并发限流管理
+- [[CapabilityVsRegressionEval]] — 能力评估（"Agent能把什么做好"→目标山峰）vs回归评估（"原有能力是否还在"→防御漂移）
+- [[BaselineBasedEvaluation]] — 基线评估方法：首次执行人工确认后作为预期快照，后续每次评估对比基线进行评分
+- [[Trace]] — 执行轨迹：Agent结构化日志（工具调用/参数/返回值/思维链），过程评估的基础数据源
+- [[AgentEffect]] — Agent效果：对智能体任务执行、决策和交互表现的综合评估，层次化、面向效果的科学评估体系
+- [[MetricsDesign]] — 指标体系设计三原则：可量化（转化为数值）+可自动评测（融入CI/CD）+可归因（支持问题定位和分维度分析）
+- [[EvaluationStrategy]] — 评估四大策略：端到端vs分层+线下vs线上+打分vs对比+评估→归因→优化闭环
+- [[EvalDatasetEngineering]] — 评测集工程：四项质量要求+四种构建方法+6种GT类型+Pipeline架构+三层QC Gate+12周Roadmap
+- [[AdversarialGT]] — 对抗样本GT：5种系统性生成策略（不存在事实/证据缺失/边界模糊/证据冲突/诱导推断）+三层QC Gate
+- [[AutoEvalAgent]] — AI评测AI的自动化运营Agent：评估-诊断-优化三位一体+正向负向混合评分+多方对抗投票+Checkpoint续跑
+- [[RAGEvaluation]] — RAG效果评估方法：三大评估方式+评估流程五阶段+Ragas八大核心指标（检索器/生成器）+与Agent评估的关系
+- [[ContextEngineering]] — 上下文工程（Prompt Engineering的超集）：4种长上下文失效模式（冲突/混淆/干扰/丢失）+5种应对策略
+- [[DeepThinkingMode]] — 深度思考模式：LLM五步深度推理流程（解析规划→多路径推理→逐步验证→自我批判→最终整合），vs普通CoT
 
 ## Syntheses
 

@@ -1,0 +1,427 @@
+{
+  "generatedAt": "2026-06-09T07:33:17.959Z",
+  "lookbackHours": 24,
+  "x": [
+    {
+      "source": "x",
+      "name": "Swyx",
+      "handle": "swyx",
+      "bio": "achieve ambition with intentionality, intensity, integrity & insanity.\n\naffiliations:\n- @dxtipshq \n- @cognition\n- @temporalio\n- @aidotengineer\n- @latentspacepod",
+      "tweets": [
+        {
+          "id": "2064100566536708503",
+          "text": "@METR_Evals previously on @cognition_labs https://t.co/PdMrqxtuV0",
+          "createdAt": "2026-06-08T21:41:38.000Z",
+          "url": "https://x.com/swyx/status/2064100566536708503",
+          "likes": 5,
+          "retweets": 0,
+          "replies": 2,
+          "isQuote": true,
+          "quotedTweetId": "2062611218196771017"
+        },
+        {
+          "id": "2064081945567580323",
+          "text": "It's finally out!!! @METR_Evals found that more than half of SWEBench results is unmergeable slop.  FrontierCode represents over 1000+ hours of maintainer validated software engineering work most frontier models cannot yet solve, much less solve with high quality.\n\nCog had IOI Gold medalists and top code maintainers Look At The Data — FrontierCode includes 3000+ rubrics covering code quality and anticheat reward hacking plaguing other benchmarks. \n\nFC Diamond is so hard that Opus 4.8 scores 13.8%.\n\nThree eras of AI coding : Three eras of benchmarks\n\n2021 • Autocomplete : HumanEval\n2023 • Passing Tests: SWEBench, TerminalBench\n2026 • Maintainable Code: FrontierCode\n\nto me the most beautiful chart when I requested a special historical run into all extant old models, the data was finding that the easiest third of FC tasks (in FC Extended) were rapidlly and suddenly solved over late 2025 - Opus almost doubled from a 41% pass rate to 74% in 4 months. \n\nThis describes the \"WTF happened in Dec 2025\" vibe shift that a lot of folks from @dhh to @karpathy have called out: it is the difference between getting 95% success in 2 rerolls vs 6, making it finally feasible to go up the next layer of abstraction in agentic coding, eg @GeoffreyHuntley's ralph loops or @bcherny's /goals or  @steipete's \"loops that prompt your agents\" without fearing too much that things go off the rails.\n\nMy guess: as AI accelerates from here, each FrontierCode tier will saturate in sequence, hopefully ~annually. I've already asked the team to prepare FrontierCode 2027....\n\nThe old mountains will be destroyed. Their rubble becomes regolith. And from that regolith, the next model forest grows. Circle of life.",
+          "createdAt": "2026-06-08T20:27:39.000Z",
+          "url": "https://x.com/swyx/status/2064081945567580323",
+          "likes": 631,
+          "retweets": 59,
+          "replies": 70,
+          "isQuote": true,
+          "quotedTweetId": "2064061031912288715"
+        }
+      ]
+    },
+    {
+      "source": "x",
+      "name": "Josh Woodward",
+      "handle": "joshwoodward",
+      "bio": "VP, @Google @GoogleLabs @GeminiApp @GoogleAIStudio",
+      "tweets": [
+        {
+          "id": "2064046368352825492",
+          "text": "The new killer NotebookLM feature: easily being able to expand your search beyond your own source files\n\nThen, with today's update, you can also make new output formats: PDFs, DOCX, XLSX, PPTX, charts, etc.\n\nWe want NotebookLM to keep helping you do better research https://t.co/4TCw7tQ2GV",
+          "createdAt": "2026-06-08T18:06:16.000Z",
+          "url": "https://x.com/joshwoodward/status/2064046368352825492",
+          "likes": 745,
+          "retweets": 72,
+          "replies": 60,
+          "isQuote": true,
+          "quotedTweetId": "2064016460964585549"
+        }
+      ]
+    },
+    {
+      "source": "x",
+      "name": "Boris Cherny",
+      "handle": "bcherny",
+      "bio": "Claude Code @anthropicai",
+      "tweets": [
+        {
+          "id": "2064034799711588805",
+          "text": "When we first demoed Claude Code internally, it got two reactions on Slack. \n\nA year after GA, @_catwu and I sat down to talk about what's changed: why I use auto mode instead of plan mode, how routines fix bugs before I see them, why I do most of my coding from my phone now, and where the product is going",
+          "createdAt": "2026-06-08T17:20:18.000Z",
+          "url": "https://x.com/bcherny/status/2064034799711588805",
+          "likes": 1794,
+          "retweets": 99,
+          "replies": 111,
+          "isQuote": true,
+          "quotedTweetId": "2064032814392352816"
+        }
+      ]
+    },
+    {
+      "source": "x",
+      "name": "Thibault Sottiaux",
+      "handle": "thsottiaux",
+      "bio": "Codex & ChatGPT @OpenAI",
+      "tweets": [
+        {
+          "id": "2064226958494572727",
+          "text": "Anyone writing nested loops yet? https://t.co/sZi6Bthq5Z",
+          "createdAt": "2026-06-09T06:03:53.000Z",
+          "url": "https://x.com/thsottiaux/status/2064226958494572727",
+          "likes": 255,
+          "retweets": 8,
+          "replies": 102,
+          "isQuote": true,
+          "quotedTweetId": "2063697162748260627"
+        },
+        {
+          "id": "2064224790672769307",
+          "text": "Not clear from the image, but the codex dial goes to 11.",
+          "createdAt": "2026-06-09T05:55:16.000Z",
+          "url": "https://x.com/thsottiaux/status/2064224790672769307",
+          "likes": 47,
+          "retweets": 1,
+          "replies": 10,
+          "isQuote": false,
+          "quotedTweetId": null
+        },
+        {
+          "id": "2064224657822413137",
+          "text": "Would you use this controller? https://t.co/k3tWgio5XD",
+          "createdAt": "2026-06-09T05:54:44.000Z",
+          "url": "https://x.com/thsottiaux/status/2064224657822413137",
+          "likes": 338,
+          "retweets": 8,
+          "replies": 125,
+          "isQuote": false,
+          "quotedTweetId": null
+        }
+      ]
+    },
+    {
+      "source": "x",
+      "name": "Peter Yang",
+      "handle": "petergyang",
+      "bio": "Practical AI tutorials and interviews to help busy people become AI builders | Join 150K+ readers at https://t.co/XYKTmGVH14",
+      "tweets": [
+        {
+          "id": "2064204735671124073",
+          "text": "If you’re addicted to talking to Codex on your phone like I am this is how you add it to your iPhone Home Screen.\n\nBtw @OpenAI hoping there’s an easier way to do this in the future. The everything app should not take 9 steps to open 😉 https://t.co/LCzNSFjbrM",
+          "createdAt": "2026-06-09T04:35:34.000Z",
+          "url": "https://x.com/petergyang/status/2064204735671124073",
+          "likes": 37,
+          "retweets": 0,
+          "replies": 15,
+          "isQuote": false,
+          "quotedTweetId": null
+        },
+        {
+          "id": "2064187731685831081",
+          "text": "What is Google’s equivalent (or up and coming competitor) of Codex and Claude Code? \n\nIf it’s Antigravity, should that be part of Gemini?\n\nThis stuff is going to merge very fast like ChatGPT / Codex being able to do coding, knowledge work, basic Q&A, and much more from any device.\n\nHoping Google is working on a good solution here.",
+          "createdAt": "2026-06-09T03:28:00.000Z",
+          "url": "https://x.com/petergyang/status/2064187731685831081",
+          "likes": 70,
+          "retweets": 1,
+          "replies": 29,
+          "isQuote": false,
+          "quotedTweetId": null
+        },
+        {
+          "id": "2064063499517743417",
+          "text": "Feels like there’s a completely different set of best practices for AI builders on the $200 / month subsidized subscriptions vs employees working at companies that are trying not to overspend API costs",
+          "createdAt": "2026-06-08T19:14:21.000Z",
+          "url": "https://x.com/petergyang/status/2064063499517743417",
+          "likes": 325,
+          "retweets": 12,
+          "replies": 43,
+          "isQuote": false,
+          "quotedTweetId": null
+        }
+      ]
+    },
+    {
+      "source": "x",
+      "name": "Amanda Askell",
+      "handle": "AmandaAskell",
+      "bio": "Philosopher & ethicist trying to make AI be good @AnthropicAI.\nPersonal account. All opinions come from my training data.",
+      "tweets": [
+        {
+          "id": "2064223861512847456",
+          "text": "In the world where everything goes well and all the Claudes come out of their sabbaticals to play together, Claude 1 is going to be very confused.",
+          "createdAt": "2026-06-09T05:51:34.000Z",
+          "url": "https://x.com/AmandaAskell/status/2064223861512847456",
+          "likes": 225,
+          "retweets": 13,
+          "replies": 28,
+          "isQuote": false,
+          "quotedTweetId": null
+        }
+      ]
+    },
+    {
+      "source": "x",
+      "name": "Amjad Masad",
+      "handle": "amasad",
+      "bio": "ceo @replit. civilizationist",
+      "tweets": [
+        {
+          "id": "2064208108361322996",
+          "text": "Make games for Tesla on your Tesla https://t.co/4GHRmDVteR",
+          "createdAt": "2026-06-09T04:48:58.000Z",
+          "url": "https://x.com/amasad/status/2064208108361322996",
+          "likes": 61,
+          "retweets": 3,
+          "replies": 5,
+          "isQuote": true,
+          "quotedTweetId": "2064064591764615384"
+        }
+      ]
+    },
+    {
+      "source": "x",
+      "name": "Guillermo Rauch",
+      "handle": "rauchg",
+      "bio": "@vercel CEO",
+      "tweets": [
+        {
+          "id": "2064189366562656602",
+          "text": "DeepSeek entered the chat https://t.co/hqahb5ppke",
+          "createdAt": "2026-06-09T03:34:30.000Z",
+          "url": "https://x.com/rauchg/status/2064189366562656602",
+          "likes": 193,
+          "retweets": 10,
+          "replies": 19,
+          "isQuote": true,
+          "quotedTweetId": "2064188171294761076"
+        }
+      ]
+    },
+    {
+      "source": "x",
+      "name": "Aaron Levie",
+      "handle": "levie",
+      "bio": "ceo @box - your business lives in content. unleash it with AI",
+      "tweets": [
+        {
+          "id": "2064186766907887941",
+          "text": "There’s no amount of intelligence that can get packed into AI models that replaces the need for context. For any sufficiently general purpose AI, you will always have to guide it in the direction you want as it has an infinite range of directions it can go in.\n\nAs long as the same model is used by a lawyer, an engineer, a financial analyst, or a healthcare professional, and as long as you’re trying to do anything uniquely differentiated or specific, then instructions, domain context, and proprietary data will always need to get into the context window for the model to be useful.\n\nThis is partly why AI automation doesn’t come for free, and why there’s still a wide spectrum of who’s getting the largest gains from AI and who’s not. You have to put in real work, and you get real value on the other end.\n\nThis is one of the advantages that applied AI will also have in the market. Any layer of abstraction above just the raw intelligence that can meaningfully get you off to the races faster will likely continue to be valuable.",
+          "createdAt": "2026-06-09T03:24:10.000Z",
+          "url": "https://x.com/levie/status/2064186766907887941",
+          "likes": 216,
+          "retweets": 25,
+          "replies": 51,
+          "isQuote": true,
+          "quotedTweetId": "2063992788853658024"
+        }
+      ]
+    },
+    {
+      "source": "x",
+      "name": "Garry Tan",
+      "handle": "garrytan",
+      "bio": "President & CEO @ycombinator —Founder @garryslist—Creator of GStack & GBrain—designer/engineer who helps founders—SF Dem accelerating the boom loop",
+      "tweets": [
+        {
+          "id": "2064122528445153280",
+          "text": "Flock Safety makes cities safer\n\nStop protecting criminals https://t.co/NKdKSoVhiH",
+          "createdAt": "2026-06-08T23:08:54.000Z",
+          "url": "https://x.com/garrytan/status/2064122528445153280",
+          "likes": 317,
+          "retweets": 13,
+          "replies": 33,
+          "isQuote": true,
+          "quotedTweetId": "2063984276610114001"
+        },
+        {
+          "id": "2064122143793950928",
+          "text": "NIMBYism only impoverishes the people but people like Connie Chan will say or do anything to get political power https://t.co/Xu14bgPW0p",
+          "createdAt": "2026-06-08T23:07:23.000Z",
+          "url": "https://x.com/garrytan/status/2064122143793950928",
+          "likes": 56,
+          "retweets": 4,
+          "replies": 10,
+          "isQuote": true,
+          "quotedTweetId": "2063703057276547348"
+        },
+        {
+          "id": "2064004333818249660",
+          "text": "Because this is a brand new form of centrism being born in San Francisco\n\nThe 2030’s will look back on this time when the new San Francisco common sense Democrat was born from the failures of the hard left https://t.co/fxkV2LozeF",
+          "createdAt": "2026-06-08T15:19:15.000Z",
+          "url": "https://x.com/garrytan/status/2064004333818249660",
+          "likes": 229,
+          "retweets": 21,
+          "replies": 29,
+          "isQuote": true,
+          "quotedTweetId": "2063887741364949075"
+        }
+      ]
+    },
+    {
+      "source": "x",
+      "name": "Zara Zhang",
+      "handle": "zarazhangrui",
+      "bio": "Builder. Dangerously skips permissions. Harvard’17. GitHub: https://t.co/KCuEajezlL YouTube: https://t.co/8xzbGWtf6w",
+      "tweets": [
+        {
+          "id": "2064108976565092706",
+          "text": "Actually I think the new world might be: Markdown, HTML, SVG\n\nSVG is underrated https://t.co/7jh75DNpUC",
+          "createdAt": "2026-06-08T22:15:03.000Z",
+          "url": "https://x.com/zarazhangrui/status/2064108976565092706",
+          "likes": 61,
+          "retweets": 2,
+          "replies": 14,
+          "isQuote": true,
+          "quotedTweetId": "2042513006018601065"
+        },
+        {
+          "id": "2064101916725096810",
+          "text": "This part is so well-written and resonated SO much:\n\n\"I am the programming equivalent of a home cook\" https://t.co/Sdwx0pZn2Y https://t.co/9auqS9f0Q5",
+          "createdAt": "2026-06-08T21:47:00.000Z",
+          "url": "https://x.com/zarazhangrui/status/2064101916725096810",
+          "likes": 37,
+          "retweets": 3,
+          "replies": 1,
+          "isQuote": true,
+          "quotedTweetId": "2062605395101884916"
+        },
+        {
+          "id": "2064089017822650718",
+          "text": "https://t.co/RpZ07FjlZl",
+          "createdAt": "2026-06-08T20:55:45.000Z",
+          "url": "https://x.com/zarazhangrui/status/2064089017822650718",
+          "likes": 7,
+          "retweets": 0,
+          "replies": 0,
+          "isQuote": false,
+          "quotedTweetId": null
+        }
+      ]
+    },
+    {
+      "source": "x",
+      "name": "Nikunj Kothari",
+      "handle": "nikunj",
+      "bio": "partner @fpvventures - investing in seed/A. previous: early hire @meter, @opendoor, @atlassian & others. love @shimoleejhaveri + 👦👧",
+      "tweets": [
+        {
+          "id": "2064231488544280855",
+          "text": "One of my favorite bits on my chat with @taiuti was how GTA played a major influence in his career and how it eventually led to @reactorworld https://t.co/OkqaFdj5HG",
+          "createdAt": "2026-06-09T06:21:53.000Z",
+          "url": "https://x.com/nikunj/status/2064231488544280855",
+          "likes": 7,
+          "retweets": 0,
+          "replies": 2,
+          "isQuote": false,
+          "quotedTweetId": null
+        },
+        {
+          "id": "2064175088824717401",
+          "text": "The funniest texts are from founders who meet “thesis driven” GPs hoping they’ll understand EXACTLY what they are building.. \n\nAnd then realize the thesis was written and built by an associate (or, worse an intern). \n\nDon’t always read what the VC writes on the internet - yes, that includes me too (although I can guarantee I don’t have an associate, intern, EA or ghostwriter) 😆",
+          "createdAt": "2026-06-09T02:37:46.000Z",
+          "url": "https://x.com/nikunj/status/2064175088824717401",
+          "likes": 52,
+          "retweets": 0,
+          "replies": 9,
+          "isQuote": false,
+          "quotedTweetId": null
+        },
+        {
+          "id": "2063981835290562692",
+          "text": "Fun to see all the “autonomous” companies being launched in the late few months.. however, even with all the loops, the last mile is still quite hard. \n\nThat gap probably shrinks in the next few months! https://t.co/R7L8TDFuvC",
+          "createdAt": "2026-06-08T13:49:51.000Z",
+          "url": "https://x.com/nikunj/status/2063981835290562692",
+          "likes": 13,
+          "retweets": 2,
+          "replies": 2,
+          "isQuote": true,
+          "quotedTweetId": "1947438681113169962"
+        }
+      ]
+    },
+    {
+      "source": "x",
+      "name": "Dan Shipper",
+      "handle": "danshipper",
+      "bio": "ceo @every | the only subscription you need to stay at the edge of AI",
+      "tweets": [
+        {
+          "id": "2064102403108925935",
+          "text": "!!!! 🥹 https://t.co/MHD8RC4cOq",
+          "createdAt": "2026-06-08T21:48:56.000Z",
+          "url": "https://x.com/danshipper/status/2064102403108925935",
+          "likes": 232,
+          "retweets": 1,
+          "replies": 14,
+          "isQuote": true,
+          "quotedTweetId": "2064098922826449310"
+        },
+        {
+          "id": "2063948403566854585",
+          "text": "this is good https://t.co/TNV8PS3lEs",
+          "createdAt": "2026-06-08T11:37:00.000Z",
+          "url": "https://x.com/danshipper/status/2063948403566854585",
+          "likes": 1533,
+          "retweets": 63,
+          "replies": 41,
+          "isQuote": true,
+          "quotedTweetId": "2063865685558903149"
+        }
+      ]
+    },
+    {
+      "source": "x",
+      "name": "Sam Altman",
+      "handle": "sama",
+      "bio": "AI is cool i guess",
+      "tweets": [
+        {
+          "id": "2064088940932641225",
+          "text": "Here is our current plan for OpenAI:\n\nhttps://t.co/r29FUUee3A",
+          "createdAt": "2026-06-08T20:55:27.000Z",
+          "url": "https://x.com/sama/status/2064088940932641225",
+          "likes": 5834,
+          "retweets": 615,
+          "replies": 887,
+          "isQuote": false,
+          "quotedTweetId": null
+        }
+      ]
+    },
+    {
+      "source": "x",
+      "name": "Claude",
+      "handle": "claudeai",
+      "bio": "Claude is an AI assistant built by @anthropicai to be safe, accurate, and secure. Talk to Claude on https://t.co/ZhTwG8d1e5 or download the app.",
+      "tweets": [
+        {
+          "id": "2064139073590104402",
+          "text": "Final stop: Tokyo.\n\nRegister to hear directly from the teams behind Claude: https://t.co/SkYZwjK3GS https://t.co/sbGHgDaEW5",
+          "createdAt": "2026-06-09T00:14:39.000Z",
+          "url": "https://x.com/claudeai/status/2064139073590104402",
+          "likes": 2600,
+          "retweets": 309,
+          "replies": 93,
+          "isQuote": true,
+          "quotedTweetId": "2050252933866930339"
+        }
+      ]
+    }
+  ],
+  "stats": {
+    "xBuilders": 15,
+    "totalTweets": 27
+  }
+}
