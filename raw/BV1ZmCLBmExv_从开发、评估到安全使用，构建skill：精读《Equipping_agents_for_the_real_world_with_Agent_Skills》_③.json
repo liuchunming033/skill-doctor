@@ -1,0 +1,17 @@
+{
+  "bvid": "BV1ZmCLBmExv",
+  "title": "从开发、评估到安全使用，构建skill：精读《Equipping agents for the real world with Agent Skills》 ③",
+  "description": "Claude 的 Skill 系统有一个决定性创新——「渐进披露」(Progressive Disclosure)。\n 它让模型像人类一样分层理解信息：\n 先读目录（元信息）、再读章节（Markdown 主体）、最后在需要时打开附录（外部文件和脚本）。\n本期我们忠实精读官方文档中最核心的部分，讲清：\n为什么 Skill 需要拆分成多个文件？\nLevel1、Level2、Level3 三层结构如何让 Claude 拥有“无限上下文”？\nClaude 如何在运行时触发技能、加载文件并动态更新上下文窗口？\n这就是 Claude Skills 的灵魂：\n 一个由「文件系统 + 上下文分页机制」驱动的动态记忆模型。\n完全基于官方原文逐句拆解，配合可视化结构图，\n 让你理解 Claude 在真实世界任务中的智能化工作原理。",
+  "duration": 383,
+  "author": "慢学AI",
+  "author_uid": 28321599,
+  "views": 7265,
+  "likes": 128,
+  "coins": 56,
+  "favorites": 270,
+  "shares": 67,
+  "danmaku": 1,
+  "pubdate": 1762933755,
+  "subtitle_list": [],
+  "has_subtitles": false
+}

@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "prompt": "帮我把这篇飞书 Wiki 导入到本地知识库：https://nio.feishu.cn/wiki/P0Oewx6FpiU2NOkTUrJc7J3MnSb 放到 raw/01-articles 目录",
+    "expected_output": "成功获取文档内容，提取标题，下载所有图片到 raw/assets/，保存 Markdown 到 raw/01-articles/，图片引用替换为本地路径",
+    "files": []
+  },
+  {
+    "id": 2,
+    "prompt": "导入这个飞书文档到我的 Obsidian Vault：https://nio.feishu.cn/wiki/OrYAw8Ex9iCEoakWvDncREh1nCb 图片下载到 raw/assets",
+    "expected_output": "成功获取文档内容并保存，图片下载到 raw/assets 目录，Markdown 中图片链接替换为相对路径",
+    "files": []
+  },
+  {
+    "id": 3,
+    "prompt": "https://nio.feishu.cn/docx/AbCdEfGhIjKlMnOpQrStUvWxYz 把这个文档拉到本地的 raw/ 文件夹",
+    "expected_output": "解析 docx URL，获取文档内容，保存到 raw/ 目录，处理图片",
+    "files": []
+  }
+]

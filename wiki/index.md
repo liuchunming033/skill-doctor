@@ -1,0 +1,124 @@
+# Wiki Index
+
+## Sources
+
+- [[摘要-perplexity-skill-practice]] — Perplexity内部Skill开发标准：五步流程+三层加载+踩坑清单正向扩充，Skill是文件夹不是代码
+- [[摘要-anthropic-skill-creator-practice]] — skill-creator元技能：管理Skill完整生命周期，覆盖创建/修改/测试/评估/优化五大功能
+- [[摘要-openspec-superpowers-nio-workflow]] — NIO定制版：OpenSpec作DSL+Superpowers作技能库，五阶段（explore→propose→apply→verify→archive），人工门禁+SHA256锁定+按需注入Skills
+- [[摘要-personal-growth-methodology]] — 个人成长方法论：跟随Builders成长+费曼法输出，输入少而精重原理、输出带观点有实践、闭环输入→实践→输出→沉淀→反向筛选
+- [[摘要-tdd-driven-nio-schema]] — OpenSpec自定义Schema：将Superpowers TDD四层防护固化为工程流程，制品DAG（proposal→specs/design→tasks→plans→apply），任务粒度物理约束+subagent串行隔离+三级审查+evidence必填
+- [[摘要-agent-four-components]] — Agent四大组件定位与联动：Prompts临时/Skills复用/Subagents隔离/MCP连接，组合口诀：单次微调Prompt+通用能力Skills+独立专项Subagents+外部数据MCP+高阶工作流组合用
+- [[摘要-openspec-superpowers-workflow]] — OpenSpec+Superpowers四阶段实战：规约设计→脚手架生成→并行业务实现→契约迭代，TDD循环+三级审查，spec.md是前后端共同真实来源
+- [[摘要-skill-0to1-framework]] — Skill系统0到1四阶段框架：认知定位→最小可行Skill→扩展结构化→运营优化，先搭反馈回路再迭代先进入真实使用再成长
+- [[摘要-skill-four-types]] — 四大Skill类型：触发式（事件触发）/工具式（Agent自主调用）/流程式（完整流程）/偏好式（固化规范），类型决定设计维护策略
+- [[摘要-skill-mental-model]] — Skill心智模型跃迁：从执行者（写步骤）到设计者（写约束），四核心框架（触发边界/约束/结构/可测性）四陷阱四跃迁，写的是Agent决策框架
+- [[摘要-anthropic-skill-lifecycle]] — Anthropic Skill生命周期七步流程：从决定到扩大测试集，评估变成持续提升前提，从"我相信"到"我可以证明"，Skill变成可迭代工作流资产
+- [[摘要-openai-skill-scorer]] — OpenAI评分器系统：确定性检查（抓底线）+评分细则检查（抓质量），锁死输出格式收集评估数据，六类扩展指标验证稳不稳贵不贵脏不脏
+- [[摘要-openai-skill-evaluation]] — OpenAI系统评估Skill方法：四类目标（结果/过程/风格/效率）+两类维护面+三类假设失控点+四类回归样本，从体感维护到证据闭环
+- [[摘要-skill-ecosystem-operation]] — Claude Code生态运营三机制：分发策略（代码库vs市场）+市场管理（试验区筛选）+依赖关系（轻量协作）+数据驱动优化
+- [[摘要-skill-9-best-practices]] — Claude Code 9个最佳实践：三层架构（内容层/结构层/高级技术层）解决被看见/可复用/有状态三大问题，核心思想是给组合能力而非固定步骤
+- [[摘要-claude-code-9-skill-types]] — Claude Code 9类能力地图：四环节（认知→生产→验证→交付）覆盖从理解系统到部署运维全流程，帮团队诊断能力缺口
+- [[摘要-skill-google-5-patterns]] — Google总结5种Skill设计模式：ToRapper/Generator/Reviewer/Inversion/Pipeline，解决知识/结构/审查/澄清/流程五大问题，模式可叠加
+- [[摘要-skill-anthropic-doc-part3]] — Skill开发评估安全使用完整方法论：问题驱动建设、分层设计、人机共创迭代、安全三原则、与MCP互补关系
+- [[摘要-skill-anthropic-doc-part2]] — Skill渐进式披露三层加载机制（元数据→正文→附录），认知执行分离架构实现近似无限上下文
+- [[摘要-skill-anthropic-doc-part1]] — Agent Skill核心概念：三要素（指令/脚本/资源）解决过程知识与组织背景缺失，动态加载突破上下文限制
+- [[摘要-ai-native-agent-pipeline]] — AI Native时代企业为何需要Agent+人协作的软件交付流水线，含NBER/FarosAI核心研究数据
+- [[摘要-obsidian-context-os]] — 为什么Obsidian是AI Coding时代最佳ContextOS，四大硬性要求与竞品对比
+- [[摘要-20min-ai-knowledge-base]] — 20分钟搭建AI驱动产品知识库的实操指南，LLM-Wiki模式入门
+- [[摘要-ai-product-requirement-pipeline]] — AI驱动产品需求与设计自动化五节点流水线详解
+- [[摘要-ai-product-workflow]] — 三大Agent技能（SK-01/02/03）的完整设计与Prompt规范
+- [[摘要-software30-context-kb-project]] — Software3.0时代企业12条产品线知识库建设专项
+- [[摘要-openspec-superpowers-gstack-workflow]] — OpenSpec+Superpowers+Gstack三工具组合的完整AI辅助开发流程
+- [[摘要-superpowers-gstack-integration]] — 37个技能路由表和5个交接点，两插件搭配的源码级拆解
+- [[摘要-superpowers-openspec-legacy-project]] — 老旧项目引入AI编程的四阶段闭环工作流，规范先行避坑指南
+- [[摘要-openspec-superpowers-tdd-v2]] — TDD v2 四层防护模型，26个原子任务27次subagent实测3/4通过
+- [[摘要-openspec-superpowers-new-project-guide]] — 新项目四阶段全流程实战，三个指令级衔接点拆解
+- [[摘要-comet-skill-intro]] — Comet 开源 Skill 功能介绍，五阶段 BDVRA 流程与状态机机制
+- [[摘要-comet-developer-story]] — Comet 开发者故事，instruction 软约束 vs 脚本硬校验的演进历程
+- [[摘要-comet-readme-zh]] — Comet 官方 README，守护脚本详解和跨平台安装指南
+- [[摘要-openspec-superpowers-gstack-threeinone]] — 三工具分工边界、四个自动串联点、七步完整流程与避坑三原则
+- [[摘要-gstack-qa-skill-workflow]] — Gstack /qa skill 双阶段流水线：Playwright 执行 + LLM 场景推导与失败归因
+- [[摘要-gstack-superpowers-perfect-loop]] — gstack+Superpowers 完美闭环：能力零重叠的分工设计与任务分流策略
+- [[摘要-opsx-openspec-new-workflow]] — OPSX 动作驱动工作流：Schema DAG 取代线性阶段式模型的架构设计
+- [[摘要-openspec-superpowers-collaboration]] — OpenSpec与Superpowers协同开发:四阶段协作流程+进阶统一命令入口+QA测试阶段+部署阶段,实现从需求到发布全流程自动化
+- [[摘要-skill-best-practices-anthropic]] — Anthropic官方Skill编写最佳实践:极致简洁原则+命名描述规范+渐进式披露架构+自由度设计+测试迭代+工程规范
+- [[摘要-skill-best-practices-official]] — Anthropic官方Skill最佳实践完整版:核心原则+Skill结构+三层加载机制+工作流反馈循环+内容指南+评估迭代+反模式+可执行代码Skill编写
+- [[摘要-skill-google-5-design-patterns]] — Google五种Skill设计模式:Tool Wrapper/Generator/Reviewer/Inversion/Pipeline,解决内容设计核心痛点,覆盖绝大多数智能体工作场景
+- [[摘要-skill-creator-evaluation]] — Anthropic skill-creator评估功能:把评估从验收环节变成Skill迭代核心前提,从"我相信有用"到"我可以证明有用"
+- [[摘要-openai-skill-systematic-evaluation]] — OpenAI系统评估Skill方法:定义成功标准→四类目标→两类评分器→六类扩展指标→五条核心原则
+- [[摘要-skill-anthropic-doc-part1-video]] — Anthropic Agent Skills官方文档解读①:解决Agent两大能力缺口(过程知识/组织背景),Skill三要素定义,Skill vs Tool本质区别
+- [[摘要-skill-anthropic-doc-part2-video]] — Anthropic Agent Skills官方文档解读②:渐进式披露三层加载机制,认知与执行分离架构,近似无限上下文的实现原理
+- [[摘要-openspec-schema-yaml]] — OpenSpec Workflow DSL Schema定义:opsx命令/阶段/门禁/产物约束,五种命令(explore/propose/apply/verify/archive),三种门禁类型
+- [[摘要-skill-anthropic-doc-part3-video]] — Anthropic Agent Skills官方文档解读③:开发评估四思路(评估驱动/分层设计/Claude视角/人机共创)+安全三建议+Skill与MCP互补关系
+- [[摘要-claude-code-9-skill-types-thariq]] — Thariq分享Claude Code内部Skill实践:9类Skill(库参考/验证/数据分析/自动化/脚手架/审查/CI-CD/运维手册/基础设施)+10条核心秘诀+运营管理
+- [[摘要-openspec-schema-templates]] — OpenSpec Schema 5个模板文件:proposal/spec/design/tasks/plan,均含SHA256锁定机制
+- [[摘要-skill-anthropic-doc-complete]] — Anthropic官方文档完整解读:诞生背景/Skill定义/三要素构成/渐进式披露/四步开发流程/安全规范,2025年12月成为跨平台开放标准
+- [[摘要-the-complete-guide-building-skill-claude-pdf]] — Anthropic官方Skill构建完整指南PDF文档链接,提供从概念到实践的系统性指导
+
+## Entities
+
+- [[Perplexity]] — AI搜索公司，内部建立严格Skill资源库，公开Skill开发标准手册，对待Skill质量和写代码同等严格
+- [[OpenAI]] — AI公司，开发GPT系列模型，提出Skill系统评估方法：四类目标+三类假设+回归样本集，从体感维护到证据闭环
+- [[ClaudeCode]] — Anthropic的AI编程助手，内置Skills机制，提出9类能力地图和9个最佳实践，成为Skill设计运营重要参考
+- [[Anthropic]] — AI安全公司，开发Claude系列模型，2024年10月发布Agent Skills官方文档
+- [[Claude]] — Anthropic开发的大语言模型，具备强对话推理能力，通过Skills机制突破Agent能力瓶颈
+- [[NBER]] — 美国全国经济研究局，发布10万+开发者AI编码实证研究（Working Paper 35275）
+- [[FarosAI]] — 工程效能分析平台，发布1,255支团队AI编码采用研究
+- [[Google]] — 头部科技公司，75%新增代码由AI生成，配套严格CI/CD流程
+- [[ApolloIO]] — 250+工程师团队，将AI Agent嵌入流水线的最佳实践案例
+- [[Accenture]] — 埃森哲，部署GitHubCopilot后PR周期缩短75%
+- [[GitHubCopilot]] — Microsoft/GitHub开发的AI编程助手，企业级AI编码工具代表
+- [[Obsidian]] — 本地Markdown知识管理工具，AI Native时代最佳ContextOS载体
+- [[FeishuProject]] — 飞书项目，AI产品需求流水线的流程枢纽与RID管理工具
+- [[Superpowers]] — Claude Code插件，94%PR拒绝率的工程纪律框架，14个技能自动触发
+- [[Gstack]] — Claude Code插件，Garry Tan的角色化虚拟团队，23个斜杠命令覆盖产品全生命周期
+- [[OpenSpec]] — Fission AI的规约驱动开发框架，编码前先生成结构化Markdown规约
+- [[Playwright]] — Microsoft 开源 E2E 浏览器自动化框架，Gstack /qa skill 的真实浏览器执行引擎
+- [[Comet]] — 基于 OpenSpec+Superpowers 的开源 Skill，状态机调度五阶段流程，支持 28+ 平台
+
+## Concepts
+
+- [[Skill0to1Framework]] — 四阶段框架：认知定位→最小可行Skill→扩展结构化→运营优化，先搭反馈回路再迭代，先进入真实使用再在反馈中长出来
+- [[SkillFourTypes]] — 四大类型：触发式（事件自动触发）/工具式（Agent自主调用）/流程式（完整流程）/偏好式（固化规范），三个问题判断类型
+- [[SkillMentalModel]] — 心智模型跃迁：执行者到设计者，从写步骤到写约束，从关注单次到关注系统，写的是Agent决策框架
+- [[SkillTwoTypes]] — Skill两类分类：Capability Uplift（补能力）vs Encoded Preference（固化偏好），前者验证增量后者验证忠实度，没有Eval都只能猜
+- [[SkillLifecycle]] — Skill七步生命周期：决定→草稿→测试→看结果→展示→改Skill→扩大，评估变成持续提升前提，把失败变成可复现对象进入迭代闭环
+- [[SkillScorerSystem]] — 两种评分器系统：确定性检查（纯代码规则抓底线）+评分细则检查（LLM裁判抓质量锁死格式），收集评估数据而非审稿意见
+- [[SkillEvaluationFramework]] — OpenAI评估框架：四类目标（结果/过程/风格/效率）+两类维护面+三类假设（触发/环境/执行）+四类样本，从体感维护到证据闭环
+- [[SkillEcosystemOperation]] — Claude生态运营四维度：分发（代码库vs市场）+筛选（试验区）+优化（数据驱动）+迭代（先进入真实使用再反馈成长）
+- [[SkillThreeLayers]] — Skill三层架构：内容层（被看见）+结构层（可复用）+高级技术层（有状态），9个最佳实践的递进层次
+- [[SkillFourStages]] — Skill四环节：认知→生产→验证→交付，诊断团队能力缺口的全流程框架
+- [[SkillCapabilityMap]] — 9类能力地图：认知3类+生产2类+验证2类+交付2类，帮团队看清哪些能力已沉淀哪些停留人脑
+- [[SkillBestPractices]] — 9个最佳实践：内容层3条+结构层3条+高级技术层3条，解决不被调用和效果差的根本问题
+- [[SkillDesignPattern]] — Google总结5种Skill设计模式，解决Agent输出不稳定问题，按问题类型选择模式（知识/结构/审查/澄清/流程）
+- [[ToRapperPattern]] — 按需注入知识模式：Skill判断命中领域才加载知识，像总闸门按需接入专家手册
+- [[GeneratorPattern]] — 固定输出结构模式：模板固定结构+风格指南固定表达+补问变量，解决输出格式不稳定
+- [[ReviewerPattern]] — 分离审查与检查规则模式：checklist（可替换）+流程（不动），流程不动规则可换
+- [[InversionPattern]] — 先问清需求再开工模式：Discovery→Constraints→Synthesis三阶段，门控阻止信息不全开工
+- [[PipelinePattern]] — 分步执行流程模式：定义步骤+显式门控+按需加载，防止跳步骤保持context干净
+- [[SkillAndMCP]] — Skill提供方法论（How）与MCP提供外部连接（What）互补，实现混合式智能：既懂方法又能执行
+- [[SkillSecurity]] — Skill安全使用三原则：只安装可信来源、阅读所有文件、理解执行逻辑，安全保护信任而非限制能力
+- [[HumanMachineCoCreation]] — 人机共创迭代：Claude反思成功失败经验，沉淀为SOP，实现持续进化
+- [[ProblemDrivenConstruction]] — 问题驱动建设：用失败样本反推缺陷，小步迭代持续验证，避免空想功能
+- [[ProgressiveDisclosure]] — 渐进式披露三层加载（元数据→正文→附录），按需展开实现近似无限上下文
+- [[CognitionExecutionSeparation]] — 认知空间（上下文）与执行空间（虚拟机）分离，外部化执行突破上下文限制
+- [[AgentSkill]] — Agent能力模块：指令/脚本/资源三要素动态加载，解决过程知识与组织背景缺失，突破上下文限制
+- [[DynamicLoading]] — Skill关键机制：按需检索挂载使用，突破固定上下文窗口限制，实现理论上无限扩展
+- [[ProcessKnowledge]] — 过程知识：完成任务的标准流程和操作步骤，Agent缺失表现为"不知道怎么做"
+- [[OrganizationalContext]] — 组织背景：资源位置和工具配置，Agent缺失表现为"不知道资源在哪"
+- [[AgentHumanPipeline]] — Agent+人协作的软件交付流水线框架，AI Native时代研发模式的核心解法
+- [[ProductivityParadox]] — AI编码生产力悖论：个体效率暴增但组织级效能落差显著
+- [[DORAMetrics]] — DevOps四项核心交付效能指标，衡量组织级真实效能的标准框架
+- [[LLMWikiPattern]] — Karpathy提出的LLM维护Wiki范式，实现知识持续复利积累
+- [[ContextOS]] — AI Coding时代的上下文操作系统，四大硬性要求定义最佳知识工具
+- [[ProductRequirementPipeline]] — AI驱动的五节点产品需求流水线，三大Agent技能串行执行
+- [[Software30]] — Software 3.0时代：自然语言驱动、上下文决定质量、知识库是核心竞争力
+- [[AtomicTDDWorkflow]] — 原子化TDD工作流：四层防护模型，任务粒度作为物理约束强制AI遵循TDD
+
+## Syntheses
+
+- [[openspec-superpowers-schema-driven-dispatch]] — OpenSpec schema.yaml 作为 Workflow Orchestrator，通过 `skill:` 字段绑定 Superpowers/Gstack skill，实现声明式全链路自动调度（Level 2）
+- [[企业AI研发阶段分布与生产力悖论]] — 86家企业调查：四阶段分布现状、生产力悖论根因、头部企业跃迁路径
+- [[mymat-design]] — Mymat 全链路 AI Coding 工作流系统完整设计方案（产品→需求→编码→验收→发布，七阶段四门禁子任务级断点恢复）
+- [[mymat-impl-spec]] — Mymat 实现细节规范：完整文件结构、Guard 脚本伯代码、Skill 模板、token 估算、序列图和安装脏本
+- [[spec-driven-nio-design]] — spec-driven-nio：OpenSpec 作为 Workflow DSL × Superpowers 作为 Skill Library 的五阶段组合系统设计（explore→propose→apply→verify→archive，SHA256 双门锁定）

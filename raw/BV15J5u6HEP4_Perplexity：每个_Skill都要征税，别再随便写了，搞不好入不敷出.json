@@ -1,0 +1,17 @@
+{
+  "bvid": "BV15J5u6HEP4",
+  "title": "Perplexity：每个 Skill都要征税，别再随便写了，搞不好入不敷出",
+  "description": "精读《Designing, Refining, and Maintaining Agent Skills at Perplexity》①\n别再随便写skill了，每一个skill都要征收一笔永续税。Perplexity 把 Skill 拆成三层税制——索引税、加载税、运行时税——越靠近上下文入口，税率越高。本期从这套\"上下文经济学\"出发，讲清楚什么值得写进 Skill、什么必须删掉、为什么 Python 之禅到了 Skill 这里全翻了。核心只有一句话：没有这条指令 Agent 会犯错吗？通不过，删掉。\n\n原文链接：https://research.perplexity.ai/articles/designing-refining-and-maintaining-agent-skills-at-perplexity",
+  "duration": 510,
+  "author": "慢学AI",
+  "author_uid": 28321599,
+  "views": 13486,
+  "likes": 225,
+  "coins": 70,
+  "favorites": 435,
+  "shares": 34,
+  "danmaku": 3,
+  "pubdate": 1778596570,
+  "subtitle_list": [],
+  "has_subtitles": false
+}

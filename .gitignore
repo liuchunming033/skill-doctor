@@ -1,0 +1,14 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Obsidian workspace state (personal/local, no need to sync)
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+
+# Raw assets (binary files, usually large)
+# raw/assets/
+
+# Raw archive (已归档素材，可按需保留)
+# raw/09-archive/

@@ -1,0 +1,17 @@
+{
+  "bvid": "BV1uZCFBdEs4",
+  "title": "SKILL到底是什么？：精读《Equipping agents for the real world with Agent Skills》 ①",
+  "description": "-Claude 很强大，但真正的智能体需要的不只是语言理解，而是「程序性知识」——能在真实工作环境中执行任务的能力。\n 本期我们忠实精读 Anthropic 官方原文《Equipping agents for the real world with Agent Skills》，逐句拆解 Claude Skill 的核心理念：\n 为什么 Skill 会成为取代传统 Prompt 的新范式？\n Claude Code 如何启发了 Skill 的出现？\n Skill、Tool 与 MCP 三者之间的边界又是什么？\n👉 这是“Claude Skills 精读系列”的第一集，我们从最初的动机出发，看 Claude 如何通过「文件夹式技能系统」获得可扩展、可复用的专业能力。\n完全忠实于官方原文，不做二手解读。\n 本系列旨在帮助 AI 产品人、工程师与研究者理解 Anthropic 的 Agent 架构底层逻辑。",
+  "duration": 347,
+  "author": "慢学AI",
+  "author_uid": 28321599,
+  "views": 11478,
+  "likes": 283,
+  "coins": 93,
+  "favorites": 543,
+  "shares": 144,
+  "danmaku": 1,
+  "pubdate": 1762787184,
+  "subtitle_list": [],
+  "has_subtitles": false
+}
